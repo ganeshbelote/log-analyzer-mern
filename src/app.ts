@@ -18,6 +18,9 @@ app.use(
 app.use(express.static('public'))
 app.use(cookieParser())
 
+app.get('/', (_, res) => {
+  res.send('Running...')
+})
 app.use('/api/v1/auth', auth)
 app.use('/api/v1/application', application)
 app.use('/api/v1/log', log)

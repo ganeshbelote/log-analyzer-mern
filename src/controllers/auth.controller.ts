@@ -1,4 +1,4 @@
-import prisma from '../config/db.js'
+import prisma from '../config/prisma.js'
 import asyncHandler from '../utils/asyncHandler.js'
 import ApiError from '../utils/apiError.js'
 import ApiResponse from '../utils/apiResponse.js'
@@ -11,6 +11,21 @@ const register = asyncHandler(async (req, res) => {
 
   if (!email || !password) {
     throw new ApiError(400, '[WARN] : missing fields')
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/
+
+  if (!emailRegex.test(email)) {
+    throw new ApiError(400, '[WARN] : invalid email address')
+  }
+
+  if (!passwordRegex.test(password)) {
+    throw new ApiError(
+      400,
+      '[WARN] : password must be at least 6 characters and contain uppercase, lowercase, number and special character'
+    )
   }
 
   const user = await prisma.user.findUnique({ where: { email: email } })
@@ -43,7 +58,7 @@ const register = asyncHandler(async (req, res) => {
 
   return res.status(201).json(
     new ApiResponse(201, '[SUCCESS] : user created successfully', {
-      ok : true,
+      ok: true,
       name: createdUser.name,
       email: createdUser.email
     })
