@@ -5,6 +5,7 @@
     "moduleResolution": "NodeNext",
 
     "rootDir": ".",
+    "typeRoots": ["./src/types", "./node_modules/@types"],
     "allowJs": true,
     "checkJs": false,
     "outDir": "./dist",

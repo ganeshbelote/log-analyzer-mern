@@ -1,5 +1,11 @@
-const createApplication = async () => {}
+import asyncHandler from "../utils/asyncHandler.js"
 
-const fetchApplication = async () => {}
+const createApplication = asyncHandler(async (req, res) => {
+    const {userId, applicationName} = req.body
+
+    
+})
+
+const fetchApplication = asyncHandler(async () => {})
 
 export { createApplication, fetchApplication }
