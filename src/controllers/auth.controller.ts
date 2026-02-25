@@ -62,7 +62,7 @@ const register = asyncHandler(async (req, res) => {
 })
 
 const login = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { userId, email, password } = req.body;
 
   if (!email || !password) {
     throw new ApiError(400, 'missing fields')
@@ -74,7 +74,7 @@ const login = asyncHandler(async (req, res) => {
     throw new ApiError(400, 'invalid email address')
   }
 
-  const user = await prisma.user.findUnique({ where: { email: email } });
+  const user = await prisma.user.findUnique({ where: { userId: userId } });
 
   if (!user) {
     throw new ApiError(401, "user not found");
